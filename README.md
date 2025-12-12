@@ -19,26 +19,7 @@ This repository contains a fully modular, multi-environment Infrastructure-as-Co
 This project demonstrates production-level thinking as a Cloud Engineer / DevOps Engineer, showcasing skills that employers expect in modern cloud infrastructure automation.
 
 🏗️ High-Level Architecture
-                    ┌─────────────────────────┐
-                    │        Internet         │
-                    └─────────────┬───────────┘
-                                  │
-                       ┌──────────▼──────────┐
-                       │ Application Load    │
-                       │      Balancer       │
-                       └──────────┬──────────┘
-                                  │
-                       ┌──────────▼───────────┐
-                       │ Auto Scaling Group   │
-                       │     EC2 Instances    │
-                       └──────────┬───────────┘
-                                  │
-                            Private Subnets
-                                  │
-     ┌────────────────────────────┼─────────────────────────────┐
-     ▼                            ▼                             ▼
-  S3 Bucket                CloudWatch Metrics           AWS Budgets Alerts
-(Application data)        → SNS → Lambda → Slack        → Email Notifications
+![Architecture Diagram](images/757aws_enterprise_architecture.png.png)
 
 📁 Repository Structure
 
@@ -47,67 +28,67 @@ Here is your complete project layout with explanations for every folder and file
 ![Architecture Diagram](images/structure1.png)
 
 project-terraform-aws/
-├─ envir/
-│  ├─ bootstrap/
-│  │  ├─ main.tf
-│  │  ├─ outputs.tf
-│  │  ├─ variables.tf
-│  │  ├─ terraform.tfstate
-│  │  └─ terraform.tfstate.backup
-│  │
-│  ├─ dev/
-│  │  ├─ versions.tf
-│  │  ├─ provider.tf
-│  │  ├─ variables.tf
-│  │  ├─ main.tf
-│  │  ├─ outputs.tf
-│  │  └─ dev.tfvars
-│  │
-│  ├─ staging/
-│  │  ├─ versions.tf
-│  │  ├─ provider.tf
-│  │  ├─ variables.tf
-│  │  ├─ main.tf
-│  │  ├─ outputs.tf
-│  │  └─ staging.tfvars
-│  │
-│  └─ production/
-│     ├─ versions.tf
-│     ├─ provider.tf
-│     ├─ variables.tf
-│     ├─ main.tf
-│     ├─ outputs.tf
-│     └─ production.tfvars
+├── README.md                     # 📘 Project documentation (architecture, usage, goals)
+├── Makefile                      # 🧰 One-command Terraform workflows (plan/apply/destroy)
+├── .gitignore                    # 🚫 Prevents committing state files & secrets
 │
-├─ modules/
-│  ├─ vpc/
-│  │  ├─ main.tf
-│  │
-│  ├─ compute-asg/
-│  │  ├─ main.tf
-│  │
-│  ├─ alb/
-│  │  ├─ main.tf
-│  │
-│  ├─ s3/
-│  │  ├─ main.tf
-│  │
-│  ├─ iam/
-│  │  ├─ main.tf
-│  │
-│  └─ monitoring/
-│     ├─ main.tf
-│     └─ lambda/
-│        └─ slack_lambda.py
+├── envir/                        # 🌍 Environment-specific Terraform configurations
+│   ├── bootstrap/               # 🏗️ Remote backend & state initialization (run once)
+│   │   ├── main.tf               # S3 + DynamoDB backend setup
+│   │   ├── variables.tf          # Backend input variables
+│   │   ├── outputs.tf            # Backend outputs
+│   │
+│   ├── dev/                     # 🧪 Development environment
+│   │   ├── versions.tf           # Terraform & provider versions
+│   │   ├── provider.tf           # AWS provider config
+│   │   ├── variables.tf          # Input variables
+│   │   ├── main.tf               # Module wiring (VPC, ALB, ASG, IAM, S3, Monitoring)
+│   │   ├── outputs.tf            # Environment outputs
+│   │   └── dev.tfvars            # Dev-specific values
+│   │
+│   ├── staging/                 # 🧩 Pre-production testing environment
+│   │   ├── versions.tf
+│   │   ├── provider.tf
+│   │   ├── variables.tf
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   └── staging.tfvars
+│   │
+│   └── production/              # 🚀 Production environment
+│       ├── versions.tf
+│       ├── provider.tf
+│       ├── variables.tf
+│       ├── main.tf
+│       ├── outputs.tf
+│       └── production.tfvars
 │
-├─ scripts/
-│  ├─ apply.sh
-│  ├─ destroy.sh
-│  ├─ init.sh
-│  └─ validate.sh
+├── modules/                     # 🧱 Reusable Terraform modules (enterprise pattern)
+│   ├── vpc/                     # 🌐 Networking (VPC, subnets, NAT, flow logs)
+│   │   └── main.tf
+│   │
+│   ├── alb/                     # ⚖️ Application Load Balancer
+│   │   └── main.tf
+│   │
+│   ├── compute-asg/             # 🔁 Auto Scaling Group + Launch Template
+│   │   └── main.tf
+│   │
+│   ├── iam/                     # 🔐 IAM roles & policies
+│   │   └── main.tf
+│   │
+│   ├── s3/                      # 🗄️ Secure S3 bucket (encryption, TLS, lifecycle)
+│   │   └── main.tf
+│   │
+│   └── monitoring/              # 📊 Observability & cost governance
+│       ├── main.tf               # CloudWatch, SNS, Budgets
+│       └── lambda/
+│           └── slack_lambda.py   # Slack alert integration
 │
-├─ Makefile
-└─ README.md
+└── scripts/                     # 🛠️ Automation helpers
+    ├── init.sh                  # Terraform init wrapper
+    ├── validate.sh              # Validation script
+    ├── apply.sh                 # Apply infrastructure
+    └── destroy.sh               # Safe teardown
+
 
 🗂️ /envir — Environment-Specific Terraform Configurations
 
@@ -308,6 +289,12 @@ make plan ENV=dev
 make apply ENV=dev
 make destroy ENV=dev
 
+
+Why recruiters love seeing this:
+✔️ Shows process automation skills
+✔️ Demonstrates structured workflows
+✔️ Enables reproducible operations
+
 🚀 Why This Project Is Production-Ready
 Feature	Value
 🔐 IAM roles	Least-privilege access
@@ -319,3 +306,4 @@ Feature	Value
 💰 Budgets alerts	Cost control
 ⛓️ Remote backend	Safe Terraform collaboration
 This project reflects how real companies build infrastructure. 
+
