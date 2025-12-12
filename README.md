@@ -16,14 +16,13 @@ This repository contains a fully modular, multi-environment Infrastructure-as-Co
 
 💰 Cost governance
 
-This project demonstrates production-level thinking as a Cloud Engineer / DevOps Engineer, showcasing skills that employers expect in modern cloud infrastructure automation.
+This project demonstrates production-level thinking as I showcasing skills that employers expect in modern cloud infrastructure automation.
 
 🏗️ **High-Level Architecture**
 ![Architecture Diagram](images/architect757.png)
 
 📁 **Repository Structure**
 
-Here is your complete project layout with explanations for every folder and file.
 
 ![Structure Diagram](images/carbon.png)
 
@@ -33,7 +32,7 @@ Here is your complete project layout with explanations for every folder and file
 
 This folder manages environment isolation, a best practice in enterprise cloud deployments.
 
-Each environment (dev, staging, production) contains its own Terraform root module — allowing you to safely deploy independent versions of the same architecture.
+Each environment (dev, staging, production) contains its own Terraform root module. Allowing me to safely deploy independent versions of the same architecture.
 
 🔑 /envir/bootstrap — Terraform Backend Setup
 
@@ -93,7 +92,7 @@ Why this structure is enterprise-grade:
 
 🧩 **/modules — Reusable Terraform Modules**
 
-Your modules follow Terraform best practices, enabling:
+My modules follow Terraform best practices, enabling:
 
 Maintainability | Reusability | Rapid scaling | Environment-agnostic architecture
 
@@ -230,21 +229,21 @@ make init ENV=dev | make plan ENV=dev | make apply ENV=dev | make destroy ENV=de
 
 Feature:	                   Value:
 
-🔐 IAM roles	            Least-privilege access
+🔐 IAM roles,	            Least-privilege access
 
-🌐 Multi-AZ VPC	            High availability
+🌐 Multi-AZ VPC,	            High availability
 
-🧱 Private subnets	      Secure compute layer
+🧱 Private subnets,	      Secure compute layer
 
-⚖️ ALB + ASG	            Autoscaling & resilience
+⚖️ ALB + ASG,	            Autoscaling & resilience
 
-📦 Encrypted S3	            Compliance & data protection
+📦 Encrypted S3,            Compliance & data protection
 
-📊 Monitoring stack	      Real-time alerting
+📊 Monitoring stack,	      Real-time alerting
 
-💰 Budgets alerts	            Cost control
+💰 Budgets alerts,	            Cost control
 
-⛓️ Remote backend	Safe        Terraform collaboration
+⛓️ Remote backend,	           Safe Terraform collaboration
 
 This project reflects how real companies build infrastructure
 . 
